@@ -1605,7 +1605,7 @@ class MethodDefiner(PropertyDefiner):
                 "name": "forEach",
                 "methodInfo": False,
                 "selfHostedName": "ArrayForEach",
-                "length": 0,
+                "length": 1,
                 "condition": PropertyDefiner.getControllingCondition(m,
                                                                      descriptor)
             })
@@ -4754,7 +4754,7 @@ class CGDOMJSProxyHandler_getOwnPropertyDescriptor(CGAbstractExternMethod):
     def __init__(self, descriptor):
         args = [Argument('*mut JSContext', 'cx'), Argument('HandleObject', 'proxy'),
                 Argument('HandleId', 'id'),
-                Argument('MutableHandle<PropertyDescriptor>', 'desc', mutable=True)]
+                Argument('MutableHandle<PropertyDescriptor>', 'desc')]
         CGAbstractExternMethod.__init__(self, descriptor, "getOwnPropertyDescriptor",
                                         "bool", args)
         self.descriptor = descriptor
@@ -4773,7 +4773,7 @@ class CGDOMJSProxyHandler_getOwnPropertyDescriptor(CGAbstractExternMethod):
                 attrs += " | JSPROP_READONLY"
             # FIXME(#11868) Should assign to desc.value, desc.get() is a copy.
             fillDescriptor = ("desc.get().value = result_root.get();\n"
-                              "fill_property_descriptor(&mut desc, proxy.get(), %s);\n"
+                              "fill_property_descriptor(desc, proxy.get(), %s);\n"
                               "return true;" % attrs)
             templateValues = {
                 'jsvalRef': 'result_root.handle_mut()',
@@ -4799,7 +4799,7 @@ class CGDOMJSProxyHandler_getOwnPropertyDescriptor(CGAbstractExternMethod):
                 attrs = "0"
             # FIXME(#11868) Should assign to desc.value, desc.get() is a copy.
             fillDescriptor = ("desc.get().value = result_root.get();\n"
-                              "fill_property_descriptor(&mut desc, proxy.get(), %s);\n"
+                              "fill_property_descriptor(desc, proxy.get(), %s);\n"
                               "return true;" % attrs)
             templateValues = {
                 'jsvalRef': 'result_root.handle_mut()',
@@ -5628,13 +5628,6 @@ class CGDescriptor(CGThing):
             return name
 
         cgThings = []
-        if not descriptor.interface.isCallback() and not descriptor.interface.isNamespace():
-            cgThings.append(CGGetProtoObjectMethod(descriptor))
-            reexports.append('GetProtoObject')
-        if (descriptor.interface.hasInterfaceObject() and
-                descriptor.shouldHaveGetConstructorObjectMethod()):
-            cgThings.append(CGGetConstructorObjectMethod(descriptor))
-            reexports.append('GetConstructorObject')
 
         unscopableNames = []
         for m in descriptor.interface.members:
@@ -5681,17 +5674,6 @@ class CGDescriptor(CGThing):
             cgThings.append(CGClassFinalizeHook(descriptor))
             cgThings.append(CGClassTraceHook(descriptor))
 
-        if descriptor.interface.hasInterfaceObject():
-            if descriptor.interface.ctor():
-                cgThings.append(CGClassConstructHook(descriptor))
-            for ctor in descriptor.interface.namedConstructors:
-                cgThings.append(CGClassConstructHook(descriptor, ctor))
-            if not descriptor.interface.isCallback():
-                cgThings.append(CGInterfaceObjectJSClass(descriptor))
-
-        if not descriptor.interface.isCallback() and not descriptor.interface.isNamespace():
-            cgThings.append(CGPrototypeJSClass(descriptor))
-
         # If there are no constant members, don't make a module for constants
         constMembers = [m for m in descriptor.interface.members if m.isConst()]
         if constMembers:
@@ -5699,11 +5681,6 @@ class CGDescriptor(CGThing):
                                               CGConstant(constMembers),
                                               public=True))
             reexports.append(descriptor.name + 'Constants')
-
-        if descriptor.interface.hasInterfaceObject() and descriptor.register:
-            cgThings.append(CGDefineDOMInterfaceMethod(descriptor))
-            reexports.append('DefineDOMInterface')
-            cgThings.append(CGConstructorEnabled(descriptor))
 
         if descriptor.proxy:
             cgThings.append(CGDefineProxyHandler(descriptor))
@@ -5766,6 +5743,25 @@ class CGDescriptor(CGThing):
                 cgThings.append(CGWeakReferenceableTrait(descriptor))
 
         cgThings.append(CGGeneric(str(properties)))
+
+        if not descriptor.interface.isCallback() and not descriptor.interface.isNamespace():
+            cgThings.append(CGGetProtoObjectMethod(descriptor))
+            reexports.append('GetProtoObject')
+            cgThings.append(CGPrototypeJSClass(descriptor))
+        if descriptor.interface.hasInterfaceObject():
+            if descriptor.interface.ctor():
+                cgThings.append(CGClassConstructHook(descriptor))
+            for ctor in descriptor.interface.namedConstructors:
+                cgThings.append(CGClassConstructHook(descriptor, ctor))
+            if not descriptor.interface.isCallback():
+                cgThings.append(CGInterfaceObjectJSClass(descriptor))
+            if descriptor.shouldHaveGetConstructorObjectMethod():
+                cgThings.append(CGGetConstructorObjectMethod(descriptor))
+                reexports.append('GetConstructorObject')
+            if descriptor.register:
+                cgThings.append(CGDefineDOMInterfaceMethod(descriptor))
+                reexports.append('DefineDOMInterface')
+                cgThings.append(CGConstructorEnabled(descriptor))
         cgThings.append(CGCreateInterfaceObjectsMethod(descriptor, properties, haveUnscopables))
 
         cgThings = generate_imports(config, CGList(cgThings, '\n'), [descriptor])

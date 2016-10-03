@@ -1220,6 +1220,18 @@
             "url": "/_mozilla/css/button_css_width.html"
           }
         ],
+        "css/button_whitespace_a.html": [
+          {
+            "path": "css/button_whitespace_a.html",
+            "references": [
+              [
+                "/_mozilla/css/button_whitespace_ref.html",
+                "=="
+              ]
+            ],
+            "url": "/_mozilla/css/button_whitespace_a.html"
+          }
+        ],
         "css/calc-basic.html": [
           {
             "path": "css/calc-basic.html",
@@ -1590,6 +1602,18 @@
               ]
             ],
             "url": "/_mozilla/css/float_clearance_intrinsic_width_a.html"
+          }
+        ],
+        "css/float_cleared_with_just_height.html": [
+          {
+            "path": "css/float_cleared_with_just_height.html",
+            "references": [
+              [
+                "/_mozilla/css/float_cleared_with_just_height_ref.html",
+                "=="
+              ]
+            ],
+            "url": "/_mozilla/css/float_cleared_with_just_height.html"
           }
         ],
         "css/float_intrinsic_height.html": [
@@ -5956,6 +5980,54 @@
               ]
             ],
             "url": "/_mozilla/css/width_nonreplaced_block_simple_a.html"
+          }
+        ],
+        "css/word-break-keep-all-005.htm": [
+          {
+            "path": "css/word-break-keep-all-005.htm",
+            "references": [
+              [
+                "/_mozilla/css/word-break-keep-all-ref-005.htm",
+                "=="
+              ]
+            ],
+            "url": "/_mozilla/css/word-break-keep-all-005.htm"
+          }
+        ],
+        "css/word-break-keep-all-006.htm": [
+          {
+            "path": "css/word-break-keep-all-006.htm",
+            "references": [
+              [
+                "/_mozilla/css/word-break-keep-all-ref-006.htm",
+                "=="
+              ]
+            ],
+            "url": "/_mozilla/css/word-break-keep-all-006.htm"
+          }
+        ],
+        "css/word-break-keep-all-007.htm": [
+          {
+            "path": "css/word-break-keep-all-007.htm",
+            "references": [
+              [
+                "/_mozilla/css/word-break-keep-all-ref-007.htm",
+                "=="
+              ]
+            ],
+            "url": "/_mozilla/css/word-break-keep-all-007.htm"
+          }
+        ],
+        "css/word-break-keep-all-008.htm": [
+          {
+            "path": "css/word-break-keep-all-008.htm",
+            "references": [
+              [
+                "/_mozilla/css/word-break-keep-all-ref-008.htm",
+                "=="
+              ]
+            ],
+            "url": "/_mozilla/css/word-break-keep-all-008.htm"
           }
         ],
         "css/word-spacing.html": [
@@ -14858,6 +14930,18 @@
           "url": "/_mozilla/css/button_css_width.html"
         }
       ],
+      "css/button_whitespace_a.html": [
+        {
+          "path": "css/button_whitespace_a.html",
+          "references": [
+            [
+              "/_mozilla/css/button_whitespace_ref.html",
+              "=="
+            ]
+          ],
+          "url": "/_mozilla/css/button_whitespace_a.html"
+        }
+      ],
       "css/calc-basic.html": [
         {
           "path": "css/calc-basic.html",
@@ -15240,6 +15324,18 @@
             ]
           ],
           "url": "/_mozilla/css/float_clearance_intrinsic_width_a.html"
+        }
+      ],
+      "css/float_cleared_with_just_height.html": [
+        {
+          "path": "css/float_cleared_with_just_height.html",
+          "references": [
+            [
+              "/_mozilla/css/float_cleared_with_just_height_ref.html",
+              "=="
+            ]
+          ],
+          "url": "/_mozilla/css/float_cleared_with_just_height.html"
         }
       ],
       "css/float_intrinsic_height.html": [
@@ -19606,6 +19702,54 @@
             ]
           ],
           "url": "/_mozilla/css/width_nonreplaced_block_simple_a.html"
+        }
+      ],
+      "css/word-break-keep-all-005.htm": [
+        {
+          "path": "css/word-break-keep-all-005.htm",
+          "references": [
+            [
+              "/_mozilla/css/word-break-keep-all-ref-005.htm",
+              "=="
+            ]
+          ],
+          "url": "/_mozilla/css/word-break-keep-all-005.htm"
+        }
+      ],
+      "css/word-break-keep-all-006.htm": [
+        {
+          "path": "css/word-break-keep-all-006.htm",
+          "references": [
+            [
+              "/_mozilla/css/word-break-keep-all-ref-006.htm",
+              "=="
+            ]
+          ],
+          "url": "/_mozilla/css/word-break-keep-all-006.htm"
+        }
+      ],
+      "css/word-break-keep-all-007.htm": [
+        {
+          "path": "css/word-break-keep-all-007.htm",
+          "references": [
+            [
+              "/_mozilla/css/word-break-keep-all-ref-007.htm",
+              "=="
+            ]
+          ],
+          "url": "/_mozilla/css/word-break-keep-all-007.htm"
+        }
+      ],
+      "css/word-break-keep-all-008.htm": [
+        {
+          "path": "css/word-break-keep-all-008.htm",
+          "references": [
+            [
+              "/_mozilla/css/word-break-keep-all-ref-008.htm",
+              "=="
+            ]
+          ],
+          "url": "/_mozilla/css/word-break-keep-all-008.htm"
         }
       ],
       "css/word-spacing.html": [
